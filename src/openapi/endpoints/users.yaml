@@ -1,0 +1,15 @@
+get:
+    tags:
+        - 1. Get users
+    security:
+        - sessionToken: []
+          apiKeyAuth: []
+    summary: Return all users associated with user requesting.
+    responses:
+        '200':
+            description: Users list
+            content:
+                application/json:
+                    schema:
+                        #$ref: '../components/schemas.yaml#/usersList'
+                    example:

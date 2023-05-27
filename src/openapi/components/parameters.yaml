@@ -1,0 +1,14 @@
+x-country:
+    in: header
+    description: Country code (alpha-3 compliant to ISO 3166) on which the operation is going to be applied
+    name: x-country
+    schema:
+        type: string
+    required: true
+id:
+    in: path
+    description: User id
+    name: id
+    schema:
+        type: string
+    required: true

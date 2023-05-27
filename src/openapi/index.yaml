@@ -1,0 +1,35 @@
+openapi: 3.0.3
+
+info:
+    title: EXPRESS - TYPESCRIPT API EXAMPLE
+    description: |-
+        This service serves as a CRUD interface for managing users info.
+    license:
+        name: Carlos Park
+        url: https://www.example.com
+    version: 1.0.0
+
+externalDocs:
+    description: More information (need VPN access)
+    url: https://www.example.com
+
+servers:
+    - url: http://localhost:5000
+      description: Local servers
+
+components:
+    securitySchemes:
+        sessionToken:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+        apiKeyAuth:
+            type: apiKey
+            in: header
+            name: apikey
+
+paths:
+    /api/v1/users:
+        $ref: './endpoints/users.yaml'
+    # /api/v1/users/{id}:
+    #     $ref: './endpoints/user-by-id.yaml'
