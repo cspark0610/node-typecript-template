@@ -1,1 +1,1 @@
-export * from './dataResponse';
+export * from './dataResponse.type';

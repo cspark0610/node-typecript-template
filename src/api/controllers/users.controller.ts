@@ -8,10 +8,10 @@ import { Roles } from '../middlewares/roles.middleware';
 
 @Controller('/api/v1/users')
 export default class UsersController {
-    private usersService: UsersService;
+    usersService: UsersService;
 
     constructor() {
-        logger.info('UsersController initialized');
+        logger.info(`${UsersController.name} initialized`);
         this.usersService = new UsersService();
     }
 

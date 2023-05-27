@@ -1,24 +1,22 @@
 import { TypeResponse } from '../emuns';
-import { DataResponse } from '../types';
+import { DataErrorResponse } from '../types';
 
 export class ApiError extends Error {
-    type = TypeResponse.ERROR;
-
-    constructor(message: string, private code: string) {
+    constructor(message: string, private code: string, private _stack: string) {
         super(message);
-        this.code = code;
 
         Object.setPrototypeOf(this, ApiError.prototype);
     }
 
-    serializeError(): DataResponse {
+    serializeError(): DataErrorResponse {
         return {
-            type: this.type,
+            type: TypeResponse.ERROR,
             data: {
                 error: {
                     code: this.code,
                     message: this.message,
                 },
+                stack: this._stack,
             },
         };
     }
