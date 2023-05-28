@@ -20,34 +20,26 @@ class ExpressApplication {
 
         // __init__,
         //this.configureAssets();
-        this.setupLogger();
-        this.setupSwaggerDoc();
-        this.setupRoutes(controllers);
+        this.setupMorganLogger();
         this.setupMiddlewares(middlewares);
+        this.setupRoutes(controllers);
+        this.useGlobalErrorHandler();
     }
 
     // configureAssets() {
     //     this.app.use(express.static(path.join(__dirname, '..', 'public')));
     // }
 
-    setupLogger() {
+    setupMorganLogger() {
         if (process.env.NODE_ENV === 'development') {
             this.app.use(morgan('dev'));
         }
     }
 
-    async setupSwaggerDoc() {
-        if (process.env.NODE_ENV === 'development') {
-            return swaggerParser
-                .dereference(path.join(__dirname, 'openapi/index.yaml'))
-                .then((result) => {
-                    this.app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(result, options));
-                    logger.info(`Swagger docs on: http://localhost:${this.port}/api-doc`);
-                })
-                .catch((error) => {
-                    logger.error(JSON.stringify(error));
-                });
-        }
+    setupMiddlewares(middlewaresArr: any[]) {
+        middlewaresArr.forEach((middleware) => {
+            this.app.use(middleware);
+        });
     }
 
     setupRoutes(controllers: any[]) {
@@ -65,8 +57,8 @@ class ExpressApplication {
 
             const expressRouter = express.Router({ mergeParams: true });
 
-            expressRouter.use(express.urlencoded({ extended: true, limit: '10mb' }));
-            expressRouter.use(express.json());
+            // expressRouter.use(express.urlencoded({ extended: true, limit: '10mb' }));
+            // expressRouter.use(express.json());
 
             routers.forEach(({ method, handlerPath, middlewares, handlerName }) => {
                 if (middlewares.length) {
@@ -91,11 +83,22 @@ class ExpressApplication {
         console.table(info);
     }
 
-    setupMiddlewares(middlewaresArr: any[]) {
-        middlewaresArr.forEach((middleware) => {
-            this.app.use(middleware);
-        });
+    useGlobalErrorHandler() {
         this.app.use('*', errorGlobalHandler);
+    }
+
+    public async setupSwaggerDoc() {
+        if (process.env.NODE_ENV === 'development') {
+            return swaggerParser
+                .dereference(path.join(__dirname, 'openapi/index.yaml'))
+                .then((result) => {
+                    this.app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(result, options));
+                    logger.info(`Swagger docs on: http://localhost:${this.port}/api-doc`);
+                })
+                .catch((error) => {
+                    logger.error(JSON.stringify(error));
+                });
+        }
     }
 
     public start() {
