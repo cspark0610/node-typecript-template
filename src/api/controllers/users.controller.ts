@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { UserRoles } from '../../core/emuns';
 import UsersService from '../../core/services/users.service';
 import { Controller } from '../../infrastructure/decorators/route/controller.decorator';
-import { Get, Post } from '../../infrastructure/decorators/route/handlers.decorator';
+import { Get, Post, Patch } from '../../infrastructure/decorators/route/handlers.decorator';
 import logger from '../../infrastructure/lib/logger';
 import { ValidationMiddleware } from '../middlewares';
 import { Roles } from '../middlewares/roles.middleware';
@@ -34,5 +34,12 @@ export default class UsersController {
     async createUser(req: Request, res: Response) {
         const user = this.usersService.createUser(req.body);
         return res.status(201).json(user);
+    }
+
+    @Patch('/:id', ValidationMiddleware(CreateUserDto, true))
+    async patchUser(req: Request, res: Response) {
+        const { id } = req.params;
+        const user = this.usersService.patchUser(req.body, +id);
+        return res.status(204).json(user);
     }
 }

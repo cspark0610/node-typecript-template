@@ -4,9 +4,9 @@ import logger from '../lib/logger';
 
 export default class UsersRepository {
     users = [
-        { id: 1, name: 'John' },
-        { id: 2, name: 'Jane' },
-        { id: 3, name: 'Jack' },
+        { id: 1, name: 'John', username: 'john', age: 25 },
+        { id: 2, name: 'Jane', username: 'janefe', age: 28 },
+        { id: 3, name: 'Jack', username: 'jack', age: 26 },
     ];
 
     constructor() {
@@ -30,5 +30,12 @@ export default class UsersRepository {
         const created = { id: Math.floor(Math.random() * 10), ...dto };
         this.users.push(created);
         return created;
+    }
+
+    patchUser(dto: Partial<CreateUserDto>, id: number) {
+        const user = this.getUsersById(id);
+        const updated = { ...user, ...dto };
+        this.users = this.users.map((user) => (user.id === id ? updated : user));
+        return updated;
     }
 }

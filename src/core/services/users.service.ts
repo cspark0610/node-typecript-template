@@ -22,4 +22,8 @@ export default class UsersService implements IUsersService {
     createUser(createUserDto: CreateUserDto) {
         return this.usersRepository.createUser(createUserDto);
     }
+
+    patchUser(patchUserDto: Partial<CreateUserDto>, id: number) {
+        return this.usersRepository.patchUser(patchUserDto, id);
+    }
 }

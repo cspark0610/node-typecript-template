@@ -17,7 +17,8 @@ export const validatorOptions: ValidatorOptions = {
     whitelist: false,
     forbidNonWhitelisted: true,
     validationError: {
-        target: false,
+        target: true,
         value: true,
     },
+    stopAtFirstError: true,
 };
