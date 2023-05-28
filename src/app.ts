@@ -45,7 +45,7 @@ class ExpressApplication {
                     logger.info(`Swagger docs on: http://localhost:${this.port}/api-doc`);
                 })
                 .catch((error) => {
-                    throw new Error(error);
+                    logger.error(JSON.stringify(error));
                 });
         }
     }

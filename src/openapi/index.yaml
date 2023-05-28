@@ -30,6 +30,6 @@ components:
 
 paths:
     /api/v1/users:
-        $ref: './endpoints/users.yaml'
+        $ref: './endpoints/get-users.yaml'
     # /api/v1/users/{id}:
-    #     $ref: './endpoints/user-by-id.yaml'
+    #     $ref: './endpoints/get-user-by-id.yaml'
