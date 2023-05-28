@@ -15,8 +15,8 @@ export default class UsersService implements IUsersService {
         return this.usersRepository.getUsers();
     }
 
-    getUsersById(id: number) {
-        return this.usersRepository.getUsersById(id);
+    getUserById(id: number) {
+        return this.usersRepository.getUserById(id);
     }
 
     createUser(createUserDto: CreateUserDto) {

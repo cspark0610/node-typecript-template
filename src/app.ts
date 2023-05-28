@@ -18,7 +18,7 @@ class ExpressApplication {
         this.app = express();
         this.port = port;
 
-        // __init__,
+        // __init__
         //this.configureAssets();
         this.setupMorganLogger();
         this.setupMiddlewares(middlewares);
@@ -56,9 +56,6 @@ class ExpressApplication {
             const routers: IRouter[] = Reflect.getMetadata(MetadataKeys.ROUTERS, Controller);
 
             const expressRouter = express.Router({ mergeParams: true });
-
-            // expressRouter.use(express.urlencoded({ extended: true, limit: '10mb' }));
-            // expressRouter.use(express.json());
 
             routers.forEach(({ method, handlerPath, middlewares, handlerName }) => {
                 if (middlewares.length) {

@@ -1,24 +1,21 @@
 import { CreateUserDto } from '../../core/dto';
 import { ApiError } from '../../core/errors';
+import { IUsersRepository } from '../../core/interfaces';
 import logger from '../lib/logger';
+import { mockDb } from '../../api/constants';
 
-export default class UsersRepository {
-    users = [
-        { id: 1, name: 'John', username: 'john', age: 25 },
-        { id: 2, name: 'Jane', username: 'janefe', age: 28 },
-        { id: 3, name: 'Jack', username: 'jack', age: 26 },
-    ];
-
+export default class UsersRepository implements IUsersRepository {
     constructor() {
         logger.info(`${UsersRepository.name} initialized`);
     }
 
     getUsers() {
-        return this.users;
+        return mockDb;
     }
 
-    getUsersById(id: number) {
-        const user = this.users.find((user) => user.id === id);
+    getUserById(id: number) {
+        const users = mockDb;
+        const user = users.find((user) => user.id === id);
 
         if (!user) {
             throw new ApiError('User not found', 'UE01', UsersRepository.name).serializeError();
@@ -27,15 +24,17 @@ export default class UsersRepository {
     }
 
     createUser(dto: CreateUserDto) {
+        const users = mockDb;
         const created = { id: Math.floor(Math.random() * 10), ...dto };
-        this.users.push(created);
+        users.push(created);
         return created;
     }
 
     patchUser(dto: Partial<CreateUserDto>, id: number) {
-        const user = this.getUsersById(id);
+        let users = mockDb;
+        const user = this.getUserById(id);
         const updated = { ...user, ...dto };
-        this.users = this.users.map((user) => (user.id === id ? updated : user));
+        users = users.map((user) => (user.id === id ? updated : user));
         return updated;
     }
 }
