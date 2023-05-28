@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 require('express-async-errors');
-import express from 'express';
 import dotenv from 'dotenv';
 import ExpressApplication from './app';
 import logger from './infrastructure/lib/logger';
@@ -11,13 +10,7 @@ dotenv.config({ path: `${process.cwd()}/.env.${process.env.NODE_ENV}` });
 const PORT = process.env.PORT || 5000;
 
 function main() {
-    const app = new ExpressApplication(
-        PORT,
-        // pass express.middlewares
-        [express.json({ limit: '10mb' }), express.urlencoded({ extended: true, limit: '10mb' })],
-        // pass controllers here 3rd arg
-        [UsersController],
-    );
+    const app = new ExpressApplication(PORT, [], [UsersController]);
 
     const server = app.start();
     //Handle SIGTERM

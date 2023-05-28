@@ -65,6 +65,9 @@ class ExpressApplication {
 
             const expressRouter = express.Router({ mergeParams: true });
 
+            expressRouter.use(express.urlencoded({ extended: true, limit: '10mb' }));
+            expressRouter.use(express.json());
+
             routers.forEach(({ method, handlerPath, middlewares, handlerName }) => {
                 if (middlewares.length) {
                     expressRouter[method](

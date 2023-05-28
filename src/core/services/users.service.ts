@@ -1,5 +1,6 @@
 import logger from '../../infrastructure/lib/logger';
 import UsersRepository from '../../infrastructure/repositories/users.repository';
+import { CreateUserDto } from '../dto';
 import { IUsersService } from '../interfaces';
 
 export default class UsersService implements IUsersService {
@@ -16,5 +17,9 @@ export default class UsersService implements IUsersService {
 
     getUsersById(id: number) {
         return this.usersRepository.getUsersById(id);
+    }
+
+    createUser(createUserDto: CreateUserDto) {
+        return this.usersRepository.createUser(createUserDto);
     }
 }

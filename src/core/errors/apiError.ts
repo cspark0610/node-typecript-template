@@ -2,7 +2,7 @@ import { TypeResponse } from '../emuns';
 import { DataErrorResponse } from '../types';
 
 export class ApiError extends Error {
-    constructor(message: string, private code: string, private _stack: string) {
+    constructor(message: string, private code: string, private _stack?: string) {
         super(message);
 
         Object.setPrototypeOf(this, ApiError.prototype);

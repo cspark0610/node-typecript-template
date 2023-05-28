@@ -7,6 +7,6 @@ export type DataErrorResponse = {
             code: string;
             message: string;
         };
-        stack: string;
+        stack?: string;
     };
 };
