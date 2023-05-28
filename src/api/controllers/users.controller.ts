@@ -26,7 +26,7 @@ export default class UsersController {
     @Get('/:id', Roles(UserRoles.ADMIN))
     async getUserById(req: Request, res: Response) {
         const { id } = req.params;
-        const user = this.usersService.getUsersById(+id);
+        const user = this.usersService.getUserById(+id);
         return res.status(200).json(user);
     }
 
