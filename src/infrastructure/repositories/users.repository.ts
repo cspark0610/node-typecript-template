@@ -1,10 +1,10 @@
 import 'reflect-metadata';
+import logger from '../lib/logger';
 import { CreateUserDto } from '../../core/dto';
 import { ApiError } from '../../core/errors';
 import { IUsersRepository } from '../../core/interfaces';
-import logger from '../lib/logger';
-import { mockDb } from '../../api/constants';
 import { injectable } from 'inversify';
+import { mockDb } from '../datasources';
 
 @injectable()
 export default class UsersRepository implements IUsersRepository {
