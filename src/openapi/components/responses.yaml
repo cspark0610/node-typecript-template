@@ -1,0 +1,13 @@
+createdUser:
+    description: The user was created successfully
+    content:
+        application/json:
+            schema:
+                $ref: './schemas.yaml#/User'
+            examples:
+                user1:
+                    value:
+                        id: 1
+                        name: John Doe
+                        username: johndoe
+                        age: 30

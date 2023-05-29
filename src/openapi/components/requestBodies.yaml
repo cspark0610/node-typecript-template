@@ -1,0 +1,11 @@
+createUser:
+    description: The userDto to pass in the body when creating a new user.
+    required: true
+    content:
+        application/json:
+            schema:
+                $ref: './schemas.yaml#/user'
+            examples:
+                name: John Doe
+                username: johndoe
+                age: 30

@@ -1,0 +1,22 @@
+user:
+    type: object
+    required:
+        - id
+        - name
+        - username
+        - age
+    properties:
+        id:
+            type: integer
+            format: int64
+        name:
+            type: string
+        username:
+            type: string
+        age:
+            type: integer
+            format: int32
+usersList:
+    type: array
+    items:
+        $ref: '#/user'

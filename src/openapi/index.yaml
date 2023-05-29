@@ -23,13 +23,7 @@ components:
             type: http
             scheme: bearer
             bearerFormat: JWT
-        apiKeyAuth:
-            type: apiKey
-            in: header
-            name: apikey
 
 paths:
-    /api/v1/users:
-        $ref: './endpoints/get-users.yaml'
-    # /api/v1/users/{id}:
-    #     $ref: './endpoints/get-user-by-id.yaml'
+    '/api/v1/users':
+        $ref: './endpoints/api-v1-users.yaml'

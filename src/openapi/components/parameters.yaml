@@ -1,7 +1,7 @@
-x-country:
+authorization:
     in: header
-    description: Country code (alpha-3 compliant to ISO 3166) on which the operation is going to be applied
-    name: x-country
+    description: Bearer token
+    name: Authorization
     schema:
         type: string
     required: true

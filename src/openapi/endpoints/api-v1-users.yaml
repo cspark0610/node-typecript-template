@@ -1,0 +1,31 @@
+get:
+    tags:
+        - 1. Get users
+    security:
+        - sessionToken: []
+    summary: Return all users.
+    responses:
+        '200':
+            content:
+                application/json:
+                    schema:
+                        $ref: '../components/schemas.yaml#/usersList'
+post:
+    tags:
+        - 2. Create user
+    security:
+        - sessionToken: []
+    summary: Create a new user
+    requestBody:
+        $ref: '../components/requestBodies.yaml#/createUser'
+    responses:
+        '201':
+            content:
+                application/json:
+                    schema:
+                        $ref: '../components/schemas.yaml#/user'
+                    example:
+                        id: 1
+                        name: John Doe
+                        username: johndoe
+                        age: 30
