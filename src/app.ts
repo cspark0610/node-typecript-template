@@ -1,5 +1,6 @@
 import path from 'path';
-import express, { Application, Handler } from 'express';
+import express, { Application } from 'express';
+import { ClassConstructor } from 'class-transformer';
 import morgan from 'morgan';
 import logger from './infrastructure/lib/logger';
 import { MetadataKeys } from './infrastructure/utils/metadata.keys';
@@ -19,7 +20,11 @@ class ExpressApplication {
     private port: string | number;
     private container: Container;
 
-    constructor(port: string | number, middlewares: any[], controllers: any[]) {
+    constructor(
+        port: string | number,
+        middlewares: any[],
+        controllers: ClassConstructor<object>[],
+    ) {
         this.app = express();
         this.port = port;
         this.container = container;
@@ -48,7 +53,7 @@ class ExpressApplication {
         });
     }
 
-    setupRoutes(controllers: any[]) {
+    setupRoutes(controllers: ClassConstructor<object>[]) {
         const info: Array<{ api: string; handler: string }> = [];
 
         controllers.forEach((Controller) => {
