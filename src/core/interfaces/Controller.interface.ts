@@ -1,5 +1,5 @@
 import { Handler } from 'express';
 
-export interface IController {
+export interface IControllerInstance {
     [handlerName: string]: Handler;
 }

@@ -1,5 +1,4 @@
-import { Handler, Request, Response } from 'express';
-import UsersService from '../services/users.service';
+import { Request, Response } from 'express';
 
 export interface IUsersController {
     getUsers(req: Request, res: Response): Response<any, Record<string, any>>;
@@ -7,9 +6,3 @@ export interface IUsersController {
     createUser(req: Request, res: Response): Response<any, Record<string, any>>;
     patchUser(req: Request, res: Response): Response<any, Record<string, any>>;
 }
-
-// export interface IUsersController {
-//     [handlerName: string]: Handler | UsersService;
-// }
-
-// export type HandlerFunction = (req: Request, res: Response) => Response<any, Record<string, any>>;

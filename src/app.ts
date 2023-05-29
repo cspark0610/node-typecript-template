@@ -12,7 +12,7 @@ import { errorGlobalHandler } from './api/middlewares';
 
 import { Container } from 'inversify';
 import container from './api/config/inversify.config';
-import { IController } from './core/interfaces';
+import { IControllerInstance } from './core/interfaces';
 
 class ExpressApplication {
     private app: Application;
@@ -54,7 +54,7 @@ class ExpressApplication {
         controllers.forEach((Controller) => {
             const controllerInstance = this.container.get<typeof Controller>(
                 Controller.name,
-            ) as unknown as IController;
+            ) as unknown as IControllerInstance;
 
             // "/api/v1/users" basePath lo que ponga dentro del decorador Controller()
             const basePath = Reflect.getMetadata(MetadataKeys.BASE_PATH, Controller);
