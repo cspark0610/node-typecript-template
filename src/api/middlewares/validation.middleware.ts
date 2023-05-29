@@ -1,12 +1,12 @@
 import { validate, ValidationError } from 'class-validator';
-import { plainToInstance } from 'class-transformer';
+import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { RequestHandler } from 'express';
 import { ApiError } from '../../core/errors';
 import logger from '../../infrastructure/lib/logger';
 import { validatorOptions } from '../constants';
 
 export const ValidationMiddleware = (
-    classDto: any,
+    classDto: ClassConstructor<object>,
     skipMissingProperties = false,
 ): RequestHandler => {
     const options = {
