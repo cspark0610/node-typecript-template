@@ -1,14 +1,18 @@
+import 'reflect-metadata';
 import logger from '../../infrastructure/lib/logger';
 import UsersRepository from '../../infrastructure/repositories/users.repository';
 import { CreateUserDto } from '../dto';
 import { IUsersService } from '../interfaces';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../../api/config/inversify.types';
 
+@injectable()
 export default class UsersService implements IUsersService {
     usersRepository: UsersRepository;
 
-    constructor() {
+    constructor(@inject(TYPES.USERS_REPOSITORY) usersRepository: UsersRepository) {
         logger.info(`${UsersService.name} initialized`);
-        this.usersRepository = new UsersRepository();
+        this.usersRepository = usersRepository;
     }
 
     getUsers() {

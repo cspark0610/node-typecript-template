@@ -10,13 +10,20 @@ import swaggerParser from '@apidevtools/swagger-parser';
 import { options } from './openapi/config-options';
 import { errorGlobalHandler } from './api/middlewares';
 
+import { Container } from 'inversify';
+import container from './api/config/inversify.config';
+import { TYPES } from './api/config/inversify.types';
+import { IUsersController } from './core/interfaces';
+
 class ExpressApplication {
     private app: Application;
     private port: string | number;
+    private container: Container;
 
     constructor(port: string | number, middlewares: any[], controllers: any[]) {
         this.app = express();
         this.port = port;
+        this.container = container;
 
         // __init__
         //this.configureAssets();
@@ -46,8 +53,9 @@ class ExpressApplication {
         const info: Array<{ api: string; handler: string }> = [];
 
         controllers.forEach((Controller) => {
-            // generamos uns nueva instancia de la clase Controller
-            const controllerInstance: { [handlerName: string]: Handler } = new Controller();
+            const controllerInstance = this.container.get<IUsersController>(
+                TYPES.USERS_CONTROLLER,
+            ) as unknown as { [handlerName: string]: Handler };
 
             // "/api/v1/users" basePath lo que ponga dentro del decorador Controller()
             const basePath = Reflect.getMetadata(MetadataKeys.BASE_PATH, Controller);
