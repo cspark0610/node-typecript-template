@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ApiError } from '../../core/errors';
-import logger from '../../infrastructure/lib/winston-logger';
+import logger from '../../infrastructure/lib/logger';
 
 export const errorGlobalHandler = (
     err: ApiError,

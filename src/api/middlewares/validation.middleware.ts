@@ -2,7 +2,7 @@ import { validate, ValidationError } from 'class-validator';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { RequestHandler } from 'express';
 import { ApiError } from '../../core/errors';
-import logger from '../../infrastructure/lib/winston-logger';
+import logger from '../../infrastructure/lib/logger';
 import { validatorOptions } from '../constants';
 
 export const ValidationMiddleware = (

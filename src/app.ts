@@ -13,7 +13,7 @@ import { errorGlobalHandler } from './api/middlewares';
 import { Container } from 'inversify';
 import container from './api/config/inversify.config';
 import { IControllerInstance } from './core/interfaces';
-import logger from './infrastructure/lib/winston-logger';
+import logger from './infrastructure/lib/logger';
 
 class ExpressApplication {
     private app: Application;

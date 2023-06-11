@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import logger from '../lib/winston-logger';
+import logger from '../lib/logger';
 import { CreateUserDto } from '../../core/dto';
 import { ApiError } from '../../core/errors';
 import { IUsersRepository } from '../../core/interfaces';
