@@ -2,6 +2,7 @@ import path from 'path';
 import express, { Application } from 'express';
 import { ClassConstructor } from 'class-transformer';
 import morgan from 'morgan';
+import { Request, Response } from 'express';
 import { MetadataKeys } from './infrastructure/utils/metadata.keys';
 import { IRouter } from './infrastructure/decorators/route/handlers.decorator';
 
@@ -43,9 +44,24 @@ class ExpressApplication {
     // }
 
     setupMorganLogger() {
-        if (process.env.NODE_ENV === 'development') {
-            this.app.use(morgan('dev'));
-        }
+        const Morgan = morgan(function (tokens: any, req: Request, res: Response) {
+            logger.info('req.headers', req.headers);
+            if (Object.values(req.params)?.length > 0) logger.info('req.params', req.params);
+            if (Object.values(req.query)?.length > 0) logger.info('req.query', req.query);
+
+            return [
+                tokens.method(req, res),
+                tokens.url(req, res),
+                tokens.status(req, res),
+                tokens.res(req, res, 'content-length'),
+                '-',
+                tokens['response-time'](req, res),
+                'ms',
+            ].join(' ');
+        });
+        //if (process.env.NODE_ENV === 'development') {
+        this.app.use(Morgan);
+        //}
     }
 
     setupMiddlewares(middlewaresArr: any[]) {
