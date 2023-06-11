@@ -2,7 +2,6 @@ import path from 'path';
 import express, { Application } from 'express';
 import { ClassConstructor } from 'class-transformer';
 import morgan from 'morgan';
-import logger from './infrastructure/lib/logger';
 import { MetadataKeys } from './infrastructure/utils/metadata.keys';
 import { IRouter } from './infrastructure/decorators/route/handlers.decorator';
 
@@ -14,6 +13,7 @@ import { errorGlobalHandler } from './api/middlewares';
 import { Container } from 'inversify';
 import container from './api/config/inversify.config';
 import { IControllerInstance } from './core/interfaces';
+import logger from './infrastructure/lib/winston-logger';
 
 class ExpressApplication {
     private app: Application;
@@ -30,8 +30,9 @@ class ExpressApplication {
         this.container = container;
 
         // __init__
-        //this.configureAssets();
+        // this.configureAssets();
         this.setupMorganLogger();
+        this.setupWinstonLogger();
         this.setupMiddlewares(middlewares);
         this.setupRoutes(controllers);
         this.useGlobalErrorHandler();
@@ -51,6 +52,10 @@ class ExpressApplication {
         middlewaresArr.forEach((middleware) => {
             this.app.use(middleware);
         });
+    }
+
+    setupWinstonLogger() {
+        logger.configureLogger();
     }
 
     setupRoutes(controllers: ClassConstructor<object>[]) {
@@ -102,17 +107,17 @@ class ExpressApplication {
                 .dereference(path.join(__dirname, 'openapi/index.yaml'))
                 .then((result) => {
                     this.app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(result, options));
-                    logger.info(`Swagger docs on: http://localhost:${this.port}/api-doc`);
+                    logger.info(`Swagger docs on`, `http://localhost:${this.port}/api-doc`);
                 })
                 .catch((error) => {
-                    logger.error(JSON.stringify(error, null, 2));
+                    logger.error('error', JSON.stringify(error));
                 });
         }
     }
 
     public start() {
         return this.app.listen(this.port, () => {
-            logger.info(`Server is running on port ${this.port}`);
+            logger.info('Server is running on port', `${this.port}`);
         });
     }
 }

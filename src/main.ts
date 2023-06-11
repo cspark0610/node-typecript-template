@@ -3,7 +3,7 @@ require('express-async-errors');
 import express from 'express';
 import dotenv from 'dotenv';
 import ExpressApplication from './app';
-import logger from './infrastructure/lib/logger';
+import logger from './infrastructure/lib/winston-logger';
 import UsersController from './api/controllers/users.controller';
 
 // Load the envs based on current NODE_ENV

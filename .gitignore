@@ -3,6 +3,8 @@
 /node_modules
 /coverage
 
+requests.http
+
 yarn-error.log
 yarn.lock
 tsconfig.tsbuildinfo
